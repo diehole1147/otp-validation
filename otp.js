@@ -7,6 +7,12 @@ let form1 = document.querySelector(".form1");
 let btn = document.querySelector(".buttn");
 let otp = document.querySelector(".otp");
 let errorbox = document.getElementById("errorbox")
+const errorSound = new Audio("https://www.myinstants.com/media/sounds/faahhhhhh.mp3");
+errorSound.preload = "auto";
+errorSound.volume = 1;
+
+const now = new Date();
+const plus15 = new Date(now.getTime() + 15 * 60 * 1000);
 
   form1.addEventListener("submit", async(e) => {
     e.preventDefault();
@@ -24,7 +30,7 @@ function OTPSend(){
     // try {
       // const res = await emailjs.send("otp_service", "otp_template", {
       //   passcode: pass_code,
-      //   time: "15 minutes",
+      //   time: plus15.toLocaleString();,
       //   email: emailInput.value, // must match your EmailJS template variable name
       // });
             otp.innerHTML = `<div class="desc">Enter the OTP sent to <span style="color:#68E1FD;">${mailId.value}</span></div>
@@ -108,7 +114,8 @@ function random4Digits() {
 }
 
 function errorHandle(otp_box){
-    wrap.classList.add("blurred")
+    wrap.classList.add("blurred");
+    playErrorSound();
    errorbox.classList.add("errorbox");
    errorbox.innerHTML=` <div class="msg">You seem to have entered an invalid OTP!</div>
     <div class="icon">
@@ -130,5 +137,13 @@ function errorHandle(otp_box){
   });
 }
 
+function playErrorSound() {
+  errorSound.muted = false;
+  errorSound.volume = 1;
+  errorSound.currentTime = 0;
+  errorSound.play().catch((e) => console.log("Audio failed:", e?.name, e));
+}
+
 window.addEventListener("load", handleResize);
 window.addEventListener("resize", handleResize);
+
