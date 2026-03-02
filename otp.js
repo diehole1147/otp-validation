@@ -144,6 +144,11 @@ function playErrorSound() {
   errorSound.play().catch((e) => console.log("Audio failed:", e?.name, e));
 }
 
+function clearMailError() {
+  mailId.classList.remove("error", "shake");
+}
+
 window.addEventListener("load", handleResize);
 window.addEventListener("resize", handleResize);
+
 
